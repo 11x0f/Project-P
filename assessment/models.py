@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-from assessment.choices import QuestionTypeChoices
+from assessment.choices import QuestionTypeChoices, DifficultyChoices
 import uuid
 
 class Question(models.Model):
@@ -10,6 +10,12 @@ class Question(models.Model):
         max_length=20,
         choices=QuestionTypeChoices
     ) 
+
+    difficulty =  models.CharField(
+        max_length=10,
+        choices=DifficultyChoices.choices,
+        default=DifficultyChoices.MEDIUM
+    )
 
     question_text=models.TextField()
 
