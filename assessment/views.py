@@ -7,6 +7,9 @@
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from assessment.choices import QuestionTypeChoices, DifficultyChoices
+
+from rest_framework.response import Response
 
 from .models import Question
 from .serializers import QuestionSerializer
@@ -25,22 +28,22 @@ class QuestionViewSet(ModelViewSet):
     # returns easy, medium and hard question each of 5 numbers
     def list(self, request, *args, **kwargs):
 
-        allowed_types = ['GRAMMAR', 'VOCABULARY']
+        allowed_types = [QuestionTypeChoices.GRAMMAR, QuestionTypeChoices.VOCABULARY]
 
         easy_questions = Question.objects.filter(
             difficulty=DifficultyChoices.EASY,
-            question_types=allowed_types,
+            question_type__in=allowed_types,
         ).order_by('?')[:5]
 
         medium_questions = Question.objects.filter(
             difficulty=DifficultyChoices.MEDIUM,
-            question_types=allowed_types,
+            question_type__in=allowed_types,
         ).order_by('?')[:5]
 
         hard_questions = Question.objects.filter(
             difficulty=DifficultyChoices.HARD,
-            question_types=allowed_types,
-        ).order_by('?')[5]
+            question_type__in=allowed_types,
+        ).order_by('?')[:5]
 
         return Response({
             "easy": QuestionSerializer(easy_questions, many=True).data,
