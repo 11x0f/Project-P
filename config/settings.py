@@ -41,7 +41,8 @@ INSTALLED_APPS = [
 
     'rest_framework', 
     'users.apps.UsersConfig',
-    'assessment'
+    'assessment',
+    'vocabulary',
 ]
 
 MIDDLEWARE = [

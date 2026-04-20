@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from .models import User
 from .serializers import RegisterSerializer, CustomTokenSerializer, UserProfileSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -34,4 +34,4 @@ class ProfileView(APIView):
             serializer.save()
             return Response(serializer.data)
 
-        return Response (serializer.erros, status  = status.HTTP_400_BAD_REQUEST)
+        return Response (serializer.errors, status  = status.HTTP_400_BAD_REQUEST)
